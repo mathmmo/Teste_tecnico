@@ -17,8 +17,8 @@ class CreateItemsTable extends Migration
 	{
 		Schema::create('items', function(Blueprint $table) {
             $table->increments('id');
-			//request information
-			$table->integer('request_id')->unsined();
+			//item information
+			$table->integer('refund_id')->unsined();
 			$table->integer('type_id' )->unsined();
 			$table->float('value');
 			$table->date('use_date');
@@ -26,7 +26,7 @@ class CreateItemsTable extends Migration
 			$table->timestamps();
 
 			//foreign key
-			$table->foreign('request_id')->references('id')->on('requests');
+			$table->foreign('refund_id')->references('id')->on('refunds');
             $table->foreign('type_id')->references('id')->on('types');
 		});
 	}
@@ -39,7 +39,7 @@ class CreateItemsTable extends Migration
 	public function down()
 	{
 		Schema::table('', function (Blueprint $table){
-			$table->dropForeign('items_request_id_foreign');
+			$table->dropForeign('items_refund_id_foreign');
 			$table->dropForeign('items_type_id_foreign');
 		});
 		Schema::drop('items');
