@@ -17,7 +17,7 @@ class Refund extends Migration
             $table->increments('id');
 			//request information
 			$table->integer('user_id')->unsined();
-			$table->string('status', 20);
+			$table->int('status', 1);
 			$table->timestamps();
 			//foreign key
 			$table->foreign('user_id')->references('id')->on('users');
