@@ -19,7 +19,7 @@ class CreateRefundsTable extends Migration
             $table->increments('id');
 			//item information
 			$table->integer('user_id')->unsined();
-			$table->varchar('type_id', 50);
+			$table->string('type_id', 64);
 			$table->float('value');
 			$table->date('use_date');
 			

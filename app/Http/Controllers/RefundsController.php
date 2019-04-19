@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Refund;
+use App\Type;
 use Gate;
+use Auth;
 
 class RefundsController extends Controller
 {
@@ -17,7 +20,8 @@ class RefundsController extends Controller
         if(!Gate::allows('isUser')){
             abort(404,"Desculpe, você não tem acesso a essa área.");
         };
-        return view('refund.index');
+        $type = Type::all();
+        return view('refund.index', compact('type'));
     }
 
     public function pending()
@@ -62,7 +66,19 @@ class RefundsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $count = count($request['type_id']);
+        $id_type = "";
+        for ($i=0; $i < $count; $i++) { 
+            $id_type = $id_type . $request['type_id'][$i].','; 
+        }
+        try {
+            $request['user_id'] = Auth::user()->id;
+            $request['type_id'] = substr($id_type, 0, -1 );
+            Refund::create($request->all());
+            return "Cadastrado";
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
     }
 
     /**
