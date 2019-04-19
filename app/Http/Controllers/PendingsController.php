@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Gate;
 
 class PendingsController extends Controller
 {
@@ -13,7 +14,10 @@ class PendingsController extends Controller
      */
     public function index()
     {
-        //
+        if(!Gate::allows('isAdmin')){
+            abort(404,"Desculpe, você não tem acesso a essa área.");
+        };
+        return view('pending.index');
     }
 
     /**

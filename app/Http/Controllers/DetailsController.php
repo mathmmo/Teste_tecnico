@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Gate;
 
 class DetailsController extends Controller
 {
@@ -13,8 +14,10 @@ class DetailsController extends Controller
      */
     public function index()
     {
-        //
-    }
+        if(!Gate::allows('isUser')){
+            abort(404,"Desculpe, você não tem acesso a essa área.");
+        };
+        return view('detail.index');    }
 
     /**
      * Show the form for creating a new resource.

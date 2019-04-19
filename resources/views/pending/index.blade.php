@@ -4,7 +4,7 @@
 <div class="dashboard">
     <div class="content">
         <div class="title m-b-md">
-            Cadastro de Reembolso.
+            Lista de reembolsos Pendentes.
         </div>
     </div>
 </div>

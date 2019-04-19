@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Gate;
 
 class TypesController extends Controller
 {
@@ -13,7 +14,10 @@ class TypesController extends Controller
      */
     public function index()
     {
-        //
+        if(!Gate::allows('isUser')){
+            abort(404,"Desculpe, você não tem acesso a essa área.");
+        };
+        return view('type.index');
     }
 
     /**
