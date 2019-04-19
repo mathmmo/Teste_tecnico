@@ -22,7 +22,7 @@ Route::post('/refund', ['as' => 'refund.index', 'uses' => 'RefundsController@sto
 Route::get('/refund', ['as' => 'refund.index', 'uses' => 'RefundsController@index']);
 Route::get('/pending', ['as' => 'refund.pending', 'uses' => 'RefundsController@pending']);
 Route::get('/aproved', ['as' => 'refund.aproved', 'uses' => 'RefundsController@aproved']);
-Route::get('/detail', ['as' => 'refund.detail', 'uses' => 'RefundsController@detail']);
+Route::get('/detail/{id}', ['as' => 'refund.detail', 'uses' => 'RefundsController@detail']);
 
 Route::resource('types' , 'TypesController');
 Route::resource('refunds' , 'RefundsController');

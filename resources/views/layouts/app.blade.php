@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-inverse navbar-static-top bg-dark navbar-dark margin">
+        <nav class="navbar navbar-inverse navbar-fixed-top bg-dark navbar-dark">
             <div class="container">
                 <div class="navbar-header">
 
@@ -78,17 +78,18 @@
                 </div>
             </div>
         </nav>
-        @if (!Auth::guest())
-            @include('layouts.sidebar')
-        @endif
-        @if(!Route::is('login'))
-            @if(!Route::is('register'))
-                <div class="view-content">
+        <div class="margin">
+            @if (!Auth::guest())
+                @include('layouts.sidebar')
             @endif
-        @endif
-                @yield('content')
-            </div>
-        
+            @if(!Route::is('login'))
+                @if(!Route::is('register'))
+                    <div class="view-content">
+                @endif
+            @endif
+                    @yield('content')
+                </div>
+        </div>
     </div>
     @yield('javascript')
     <!-- Scripts -->

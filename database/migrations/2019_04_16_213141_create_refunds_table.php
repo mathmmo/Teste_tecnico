@@ -22,6 +22,7 @@ class CreateRefundsTable extends Migration
 			$table->string('type_id', 64);
 			$table->float('value');
 			$table->date('use_date');
+			$table->integer('status')->default(0);
 			
 			$table->timestamps();
 
@@ -38,7 +39,7 @@ class CreateRefundsTable extends Migration
 	public function down()
 	{
 		Schema::table('', function (Blueprint $table){
-			$table->dropForeign('refund_userid_foreign');
+			$table->dropForeign('refund_user_id_foreign');
 		});
 		Schema::drop('refunds');
 	}

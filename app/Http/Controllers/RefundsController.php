@@ -29,15 +29,19 @@ class RefundsController extends Controller
         if(!Gate::allows('isAdmin')){
             abort(404,"Desculpe, você não tem acesso a essa área.");
         };
-        return view('refund.pending');
+        $pending = Refund::where('status',0)->get();
+        return view('refund.pending', compact('pending'));
     }
 
-    public function detail()
+    public function detail($id)
     {
-        if(!Gate::allows('isUser')){
+        if(!Gate::allows('isAdmin')){
             abort(404,"Desculpe, você não tem acesso a essa área.");
         };
-        return view('refund.detail');    
+        $refid = Refund::where('id', $id)->first();
+        $typeids = explode(',', $refid['type_id']);
+        $count = count($typeids);
+        return view('refund.detail', compact('refid','typeids','count') );    
     }
 
     public function aproved()
@@ -45,7 +49,8 @@ class RefundsController extends Controller
         if(!Gate::allows('isAdmin')){
             abort(404,"Desculpe, você não tem acesso a essa área.");
         };
-        return view('refund.aproved');
+        $aproved = Refund::where('status',1)->get();
+        return view('refund.aproved', compact('aproved'));
     }
 
     /**
@@ -75,7 +80,8 @@ class RefundsController extends Controller
             $request['user_id'] = Auth::user()->id;
             $request['type_id'] = substr($id_type, 0, -1 );
             Refund::create($request->all());
-            return "Cadastrado";
+            return 'Cadastrado';
+            //return view('refund.index');
         } catch (\Throwable $th) {
             return $th->getMessage();
         }

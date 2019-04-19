@@ -10,6 +10,7 @@ class Refund extends Model
         'user_id',
         'type_id',
         'value',
-        'use_date'
+        'use_date',
+        'status'
     ];
 }
