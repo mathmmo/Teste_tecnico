@@ -4,9 +4,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateItemsTable.
+ * Class CreateRefundsTable.
  */
-class CreateItemsTable extends Migration
+class CreateRefundsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,19 +15,18 @@ class CreateItemsTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('items', function(Blueprint $table) {
+		Schema::create('refunds', function(Blueprint $table) {
             $table->increments('id');
 			//item information
-			$table->integer('refund_id')->unsined();
-			$table->integer('type_id' )->unsined();
+			$table->integer('user_id')->unsined();
+			$table->varchar('type_id', 50);
 			$table->float('value');
 			$table->date('use_date');
 			
 			$table->timestamps();
 
 			//foreign key
-			$table->foreign('refund_id')->references('id')->on('refunds');
-            $table->foreign('type_id')->references('id')->on('types');
+			$table->foreign('user_id')->references('id')->on('users');
 		});
 	}
 
@@ -39,9 +38,8 @@ class CreateItemsTable extends Migration
 	public function down()
 	{
 		Schema::table('', function (Blueprint $table){
-			$table->dropForeign('items_refund_id_foreign');
-			$table->dropForeign('items_type_id_foreign');
+			$table->dropForeign('refund_userid_foreign');
 		});
-		Schema::drop('items');
+		Schema::drop('refunds');
 	}
 }

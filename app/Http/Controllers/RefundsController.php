@@ -20,6 +20,30 @@ class RefundsController extends Controller
         return view('refund.index');
     }
 
+    public function pending()
+    {
+        if(!Gate::allows('isAdmin')){
+            abort(404,"Desculpe, você não tem acesso a essa área.");
+        };
+        return view('refund.pending');
+    }
+
+    public function detail()
+    {
+        if(!Gate::allows('isUser')){
+            abort(404,"Desculpe, você não tem acesso a essa área.");
+        };
+        return view('refund.detail');    
+    }
+
+    public function aproved()
+    {
+        if(!Gate::allows('isAdmin')){
+            abort(404,"Desculpe, você não tem acesso a essa área.");
+        };
+        return view('refund.aproved');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

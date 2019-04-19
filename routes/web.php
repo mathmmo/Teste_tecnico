@@ -16,7 +16,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/types', ['as' => 'type.index', 'uses' => 'TypesController@index']);
-Route::get('/pending', ['as' => 'pending.index', 'uses' => 'PendingsController@index']);
-Route::get('/aproved', ['as' => 'aproved.index', 'uses' => 'AprovedsController@index']);
 Route::get('/refund', ['as' => 'refund.index', 'uses' => 'RefundsController@index']);
-Route::get('/detail', ['as' => 'detail.index', 'uses' => 'DetailsController@index']);
+Route::get('/pending', ['as' => 'refund.pending', 'uses' => 'RefundsController@pending']);
+Route::get('/aproved', ['as' => 'refund.aproved', 'uses' => 'RefundsController@aproved']);
+Route::get('/detail', ['as' => 'refund.detail', 'uses' => 'RefundsController@detail']);

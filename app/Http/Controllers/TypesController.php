@@ -19,7 +19,7 @@ class TypesController extends Controller
         };
         return view('type.index');
     }
-
+        
     /**
      * Show the form for creating a new resource.
      *
