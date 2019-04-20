@@ -19,10 +19,10 @@ Route::get('/type', ['as' => 'type.index', 'uses' => 'TypesController@index']);
 Route::post('/type', ['as' => 'type.index', 'uses' => 'TypesController@store']);
 Route::get('/refund', ['as' => 'refund.index', 'uses' => 'RefundsController@index']);
 Route::post('/refund', ['as' => 'refund.index', 'uses' => 'RefundsController@store']);
-Route::get('/refund', ['as' => 'refund.index', 'uses' => 'RefundsController@index']);
 Route::get('/pending', ['as' => 'refund.pending', 'uses' => 'RefundsController@pending']);
 Route::get('/aproved', ['as' => 'refund.aproved', 'uses' => 'RefundsController@aproved']);
 Route::get('/detail/{id}', ['as' => 'refund.detail', 'uses' => 'RefundsController@detail']);
+Route::get('/edit/{z}', ['as' => 'refund.edit', 'uses' => 'RefundsController@update']);
 
 Route::resource('types' , 'TypesController');
 Route::resource('refunds' , 'RefundsController');

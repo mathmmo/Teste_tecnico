@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Refund;
 use App\Type;
+use App\User;
 use Gate;
 use Auth;
+
 
 class RefundsController extends Controller
 {
@@ -18,38 +20,55 @@ class RefundsController extends Controller
     public function index()
     {
         if(!Gate::allows('isUser')){
-            abort(404,"Desculpe, você não tem acesso a essa área.");
+            abort(403,"Desculpe, você não tem acesso a essa área.");
         };
         $type = Type::all();
         return view('refund.index', compact('type'));
     }
 
+    public function teste($id){
+        Refund::find($id)->update(['status' => 1]);
+    }
+
     public function pending()
     {
         if(!Gate::allows('isAdmin')){
-            abort(404,"Desculpe, você não tem acesso a essa área.");
+            abort(403,"Desculpe, você não tem acesso a essa área.");
         };
-        $pending = Refund::where('status',0)->get();
+        $pending = Refund::where('status',0)
+            ->join('users', 'refunds.user_id', '=', 'users.id')
+            ->select('refunds.*', 'users.name')
+            ->get();
         return view('refund.pending', compact('pending'));
     }
 
     public function detail($id)
     {
         if(!Gate::allows('isAdmin')){
-            abort(404,"Desculpe, você não tem acesso a essa área.");
+            abort(403,"Desculpe, você não tem acesso a essa área.");
         };
-        $refid = Refund::where('id', $id)->first();
-        $typeids = explode(',', $refid['type_id']);
-        $count = count($typeids);
-        return view('refund.detail', compact('refid','typeids','count') );    
+        $refundDetail = Refund::where('id', $id)->first();
+        $refundName = User::where('id',$refundDetail['user_id'])->select('name')->first();
+        //Array of numbers.
+        $typeIds = explode(',', $refundDetail['type_id']);
+        $typeNames = [];
+        foreach ($typeIds as $item ) {  
+            $typeNames[] = Type::where('id',$item)->select('name')->first();
+        }
+        $count = count($typeNames);
+        return view('refund.detail', compact('refundDetail','typeIds','count','typeNames', 'refundName' ));    
     }
 
     public function aproved()
     {
         if(!Gate::allows('isAdmin')){
-            abort(404,"Desculpe, você não tem acesso a essa área.");
+            abort(403,"Desculpe, você não tem acesso a essa área.");
         };
-        $aproved = Refund::where('status',1)->get();
+        $aproved = Refund::where('status',1)
+            ->join('users', 'refunds.user_id', '=', 'users.id')
+            ->select('refunds.*', 'users.name')
+            ->get();
+
         return view('refund.aproved', compact('aproved'));
     }
 
@@ -80,7 +99,7 @@ class RefundsController extends Controller
             $request['user_id'] = Auth::user()->id;
             $request['type_id'] = substr($id_type, 0, -1 );
             Refund::create($request->all());
-            return 'Cadastrado';
+            return redirect('refund');
             //return view('refund.index');
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -116,9 +135,11 @@ class RefundsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        Refund::find($id)->update(['status' => 1]);
+
+        return redirect('pending');
     }
 
     /**

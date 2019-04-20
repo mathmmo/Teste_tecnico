@@ -5,22 +5,30 @@
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <center><h2>Detalhes</h2></center>
-        <table class="table table-responsive text-center table-compact">
-            <tr>
-                <th style="text-align: center;">Funcionario</th>
-                <th style="text-align: center;">Data</th>
-                <th style="text-align: center;">Valor</th>
-                <th style="text-align: center;">Detalhes</th>
-            </tr>
-            @foreach($ as $item)
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{{ $item->user_id }}</td>
-                    <td>{{ $item->use_date }}</td>
-                    <td>{{ $item->value }}</td>
-                    <td><a href="{{ route('refund.detail' ,$item->id) }}"><i class="fas fa-eye table-icon"></i>Detalhes</a></td>
+                    <th>{{ $refundName->name }}</th>
+                    <th></th>
+                    <th></th>
                 </tr>
-            @endforeach
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Valor total:</th>
+                    <th></th>
+                    <th>{{ $refundDetail->value }}</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach($typeNames as $type)
+                <tr>
+                    <td>{{$type->name}}</td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
+        <a href="{{ route('refund.edit', $refundDetail->id ) ,  $refundDetail->id }}" class="btn btn-success">Aprovar</a>
     </div>
     <div class="col-md-3"></div>
 @endsection
