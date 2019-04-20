@@ -45,7 +45,7 @@ class TypesController extends Controller
             Type::create($request->all());
             unset($request);
             $type = Type::all();
-            return view('type.index', compact('type'));
+            return redirect('type');
         } catch (\Throwable $e) {
             return $e->getMessage();
         }
